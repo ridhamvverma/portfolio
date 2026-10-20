@@ -1,0 +1,105 @@
+@font-face {
+  font-family: "Creative Caveat";
+  src: url("/fonts/caveat-latin-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+.layer {
+  --creative-accent: #5f7bd1;
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  color: var(--creative-accent);
+  pointer-events: none;
+}
+
+:global(html[data-appearance-color="rose"]) .layer {
+  --creative-accent: #b96989;
+}
+
+:global(html[data-appearance-color="emerald"]) .layer {
+  --creative-accent: #448d87;
+}
+
+:global(html[data-appearance-color="blue"]) .layer {
+  --creative-accent: #6e74cf;
+}
+
+:global(html[data-appearance-color="amber"]) .layer {
+  --creative-accent: #a7803f;
+}
+
+:global(html[data-appearance-color="violet"]) .layer {
+  --creative-accent: #9271bc;
+}
+
+.guide {
+  position: absolute;
+  z-index: -1;
+  --creative-guide-color: color-mix(in srgb, var(--creative-accent) 52%, transparent);
+  box-sizing: border-box;
+  border-block: 1px solid var(--creative-guide-color);
+  background-image:
+    radial-gradient(circle, var(--creative-guide-color) 0.85px, transparent 1px),
+    radial-gradient(circle, var(--creative-guide-color) 0.85px, transparent 1px);
+  background-size: 2px 8px;
+  background-position: left top, right top;
+  background-repeat: repeat-y;
+  pointer-events: none;
+}
+
+@media (width < 768px) {
+  .guide {
+    display: none;
+  }
+}
+
+.arrows {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.note {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: "Creative Caveat", "Caveat", cursive;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.22;
+  text-align: left;
+  color: inherit;
+}
+
+.heading {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.text {
+  font-size: 18px;
+  font-style: normal;
+  line-height: 1.22;
+  opacity: 0.92;
+}
+
+@media (width < 1152px) {
+  .note,
+  .arrows {
+    display: none;
+  }
+}
+

@@ -1,0 +1,77 @@
+.page {
+  --entrance-distance: 8px;
+  --entrance-duration: 420ms;
+  --entrance-header-duration: 400ms;
+  --entrance-actions-duration: 440ms;
+  --entrance-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --entrance-header: 0ms;
+  --entrance-avatar: 100ms;
+  --entrance-name: 190ms;
+  --entrance-intro-1: 280ms;
+  --entrance-intro-2: 370ms;
+  --entrance-intro-3: 460ms;
+  --entrance-caption: 380ms;
+  --entrance-actions: 560ms;
+}
+
+/* Replace homepage parent fades; lower sections stay immediately available.
+   The shared article header retains its existing behavior outside this page. */
+.page :global(.reveal) {
+  animation: none;
+}
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(var(--entrance-distance)); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page :global(.top-bar),
+  .page :global(section[aria-labelledby="hero-name"] [role="img"]),
+  .page :global(#hero-name),
+  .page :global(main > section[aria-label] > p),
+  .page :global(.hero-message > p),
+  .page :global(.creative-switch),
+  .page :global(.send-message) {
+    animation-name: settle;
+    animation-duration: var(--entrance-item-duration, var(--entrance-duration));
+    animation-timing-function: var(--entrance-easing);
+    animation-delay: var(--entrance-delay, 0ms);
+    /* Only cover the delay. Finished elements retain no animated transforms
+       or opacity, so popovers and selection frames keep their normal geometry. */
+    animation-fill-mode: backwards;
+  }
+
+  .page :global(.top-bar) {
+    /* The shared header has a legacy inline delay; scope its override here. */
+    animation-delay: var(--entrance-header) !important;
+    --entrance-item-duration: var(--entrance-header-duration);
+  }
+  .page :global(section[aria-labelledby="hero-name"] [role="img"]) {
+    --entrance-delay: var(--entrance-avatar);
+  }
+  .page :global(#hero-name) {
+    --entrance-delay: var(--entrance-name);
+  }
+  .page :global(main > section[aria-label] > p:nth-child(1)) {
+    --entrance-delay: var(--entrance-intro-1);
+  }
+  .page :global(main > section[aria-label] > p:nth-child(2)) {
+    --entrance-delay: var(--entrance-intro-2);
+  }
+  .page :global(main > section[aria-label] > p:nth-child(3)) {
+    --entrance-delay: var(--entrance-intro-3);
+  }
+  .page :global(.hero-message > p) {
+    --entrance-delay: var(--entrance-caption);
+  }
+  .page :global(.creative-switch),
+  .page :global(.send-message) {
+    --entrance-delay: var(--entrance-actions);
+    --entrance-item-duration: var(--entrance-actions-duration);
+  }
+}
+
+@media (width < 520px) {
+  .page { --entrance-distance: 6px; }
+}
